@@ -2,13 +2,13 @@ Clarify
 =======
 [![Build Status](https://travis-ci.com/npelikan/clarify.svg?branch=master)](https://travis-ci.com/npelikan/clarify)
 
-A fork of openelections' clarify.
+A fork of OpenElections' Clarify.
 
 A Python library to discover and parse results for jurisdictions that use election results reporting systems from [SOE Software](http://www.soesoftware.com/product/clarity-election-night-reporting/), a Florida-based company that offers its products under the "Clarity" name. Web sites using Clarity are recognizable by URLs that begin with "http://results.enr.clarityelections.com" and have zip files containing structured data in XML, CSV and XLS format.
 
 Clarify offers an interface for discovering the locations of those zip files and another for parsing the XML versions of the data contained within them. Currently it does not handle downloading and unzipping those files, leaving that to the user.
 
-Clarify has been tested under 3+.
+Clarify has been tested under Python 3+.
 
 Installation
 -------------
