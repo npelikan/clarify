@@ -8,6 +8,9 @@ v2_url = "http://results.enr.clarityelections.com/NJ/Mercer/71882/Web02/#/"
 
 # test if jurisdiction auto_downloads
 def test_jurisdiction_parse():
+    """
+    Issue #1 DONEEEEE
+    """
     j = Jurisdiction(v1_url, 'county')
     p = Parser()
     p.from_jurisdiction(j)

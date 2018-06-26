@@ -2,12 +2,13 @@ Clarify
 =======
 [![Build Status](https://travis-ci.com/npelikan/clarify.svg?branch=master)](https://travis-ci.com/npelikan/clarify)
 
+A fork of openelections' clarify.
 
 A Python library to discover and parse results for jurisdictions that use election results reporting systems from [SOE Software](http://www.soesoftware.com/product/clarity-election-night-reporting/), a Florida-based company that offers its products under the "Clarity" name. Web sites using Clarity are recognizable by URLs that begin with "http://results.enr.clarityelections.com" and have zip files containing structured data in XML, CSV and XLS format.
 
 Clarify offers an interface for discovering the locations of those zip files and another for parsing the XML versions of the data contained within them. Currently it does not handle downloading and unzipping those files, leaving that to the user.
 
-Clarify has been tested under Python 2.7.X and 3.4.1.
+Clarify has been tested under 3+.
 
 Installation
 -------------
@@ -15,7 +16,7 @@ Installation
 Clarify can be installed using pip:
 
 ```
-pip install clarify
+pip install git+git://github.com/npelikan/clarify
 ```
 
 Usage
@@ -46,13 +47,21 @@ The `Jurisdiction` object also provides access to any sub-jurisdiction details, 
 
 ### Parser
 
-Clarify's `Parser` class accepts a file or file-like object representing the unzipped election results file in XML format and parses it into Python objects containing details about specific elections (which are called contests in the schema) and results.  The parser only handles the parsing of the XML into objects which make the election data easy to access.  the user needs to handle the downloading and un-zipping portion of the workflow.
+Clarify's `Parser` class accepts a file or file-like object representing the unzipped election results file in XML format and parses it into Python objects containing details about specific elections (which are called contests in the schema) and results. 
+
 
 Create a new parser object and parser a results XML file:
 
 ```
 >>> p = clarify.Parser()
 >>> p.parse("path/to/detail.xml")
+```
+
+The parser object can also find and download up-to-date results if given a `Jurisdiction` object using the method `.from_jurisdiction`
+```
+j = clarify.Jurisdiction(url='http://results.enr.clarityelections.com/KY/15261/30235/en/summary.html', level='state')
+p = clarify.Parser()
+p.from_jurisdiction(j)
 ```
 
 Once the ``parse()`` method has been called, the `Parser` object has properties that provide information about the election and jurisdiction of the results file:
@@ -158,12 +167,7 @@ Running tests
 python setup.py test
 ```
 
-Issues
-------
-
-To report an bug or request a feature, please [create a new issue](https://github.com/openelections/clarify/issues) describing the situation, providing as much detail as possible. Bear in mind that we are using Clarify to load election results data as part of OpenElections and thus supporting states that use it likely will be the highest priority. We welcome contributions: feel free to fork the code and submit pull requests.
-
 License
 -------
 
-Clarify is released under the MIT License.
+Clarify is released (and forked!) under the MIT License.
