@@ -50,7 +50,7 @@ install:
 #  - set PATH=%_PREREQ_ABSDIR%\%_PKGDIR%\bin;%PATH%
   # We need wheel installed to build wheels
   - "%PYTHON%\\python.exe -m pip install wheel"
-  - %PYTHON%\python.exe -m pip install lxml
+  - "%PYTHON%\python.exe -m pip install lxml"
 
 build: off
 
