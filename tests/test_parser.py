@@ -1,4 +1,5 @@
 from clarify import *
+import os
 
 v1_url = "http://results.enr.clarityelections.com/NJ/Cape_May/71890/190686/Web01/en/summary.html"
 
@@ -9,11 +10,17 @@ v2_url = "http://results.enr.clarityelections.com/NJ/Mercer/71882/Web02/#/"
 def test_jurisdiction_parse():
     j = Jurisdiction(v1_url, 'county')
     p = Parser()
-    p = p.from_jurisdiction(j)
-    assert isinstance(p, Parser)
+    p.from_jurisdiction(j)
+    assert p.region == 'Cape May'
+
+    j2 = Jurisdiction(v2_url, 'county')
+    p.from_jurisdiction(j2)
+    assert p.region == 'Mercer'
 
 def test_backwards_compatibility():
     er = Parser()
+    er.parse('tests/data/precinct.xml')
+    assert er.region == "Greenup"
 
 
 # import datetime

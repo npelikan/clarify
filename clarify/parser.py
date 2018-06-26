@@ -11,8 +11,6 @@ from zipfile import ZipFile
 import tempfile
 
 
-
-
 class Parser(object):
     """
     Parser for a jurisdiction's detail XML report files
@@ -64,11 +62,10 @@ class Parser(object):
             extracted_file = zipfile.extract(file_name, path=tfl)
         else:
             raise Exception("too many files in zip. New format?")
-
         self._parse_file(extracted_file)
 
-    def _parse_file(self, f):
-        tree = etree.parse(f)
+    def _parse_file(self, file):
+        tree = etree.parse(file)
         election_voter_turnout = self._parse_election_voter_turnout(tree)
         self.timestamp = self._parse_timestamp(tree)
         self.election_name = self._parse_election_name(tree)
@@ -77,7 +74,6 @@ class Parser(object):
         self.total_voters = int(election_voter_turnout[0])
         self.ballots_cast = int(election_voter_turnout[1])
         self.voter_turnout = float(election_voter_turnout[2])
-
         self._result_jurisdictions = self._parse_result_jurisdictions(tree)
         self._result_jurisdiction_lookup = {j.name: j for j in self._result_jurisdictions}
         self._contests = self._parse_contests(tree, self._result_jurisdiction_lookup)
