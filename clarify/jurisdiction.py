@@ -22,10 +22,12 @@ class Jurisdiction(object):
         political jurisdiction (a state, for example), and the corresponding
         level in lowercase ("state" or "county").
         """
-
         self.url = url
         self.parsed_url = self._parse_url()
         self.state = self._get_state_from_url()
+        self.jurisid = self._get_jurisid()
+        self.electionid = self._get_electionid()
+        self.current_version = self._get_current_version()
         self.level = level
         self.name = name
         self.summary_url = self._get_summary_url()
@@ -96,6 +98,25 @@ class Jurisdiction(object):
         """
         return self.parsed_url.path.split('/')[1]
 
+    def _get_jurisid(self):
+        """
+        Returns jurisdiction name from url
+        """
+        return self.parsed_url.path.split('/')[2]
+
+    def _get_electionid(self):
+        """
+        Returns the 5-digit election identifier from the URL
+        """
+        return self.parsed_url.path.split('/')[3]
+
+    def _get_current_version(self):
+        """
+        Gets the 5-digit current version number via GET request
+        """
+        url = self._state_url()+'/'+self.jurisid+'/'+self.electionid+"/current_ver.txt"
+        return requests.get(url).text
+
     def _get_subjurisdictions_url(self):
         """
         Returns a URL for the county detail page, which lists URLs for
@@ -160,11 +181,12 @@ class Jurisdiction(object):
             segment = tree.xpath("//script")[0].values()[0].split('/')[1]
         return '/'+ segment + '/en/summary.html'
 
+
     def report_url(self, fmt):
         """
         Returns link to detailed report depending on format. Formats are xls, txt and xml.
         """
-        url = self._state_url() + '/' + '/'.join(self.parsed_url.path.split('/')[2:-2]) + "/reports/detail{}.zip".format(fmt)
+        url = self._state_url()+'/'+self.jurisid+'/'+self.electionid+'/'+self.current_version+"/reports/detail{}.zip".format(fmt)
         r = requests.get(url)
         if r.status_code == 200:
             return url
@@ -175,7 +197,7 @@ class Jurisdiction(object):
         """
         Returns the summary report URL for a jurisdiction.
         """
-        url = self._state_url() + '/' + '/'.join(self.parsed_url.path.split('/')[2:-2]) + "/reports/summary.zip"
+        url = self._state_url()+'/'+self.jurisid+'/'+self.electionid+'/'+self.current_version+"/reports/summary.zip"
         r = requests.get(url)
         if r.status_code == 200:
             return url

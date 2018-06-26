@@ -35,11 +35,6 @@ setup(
         'python-dateutil',
         'requests-futures',
     ],
-    tests_require=[
-        'nose',
-        'responses',
-    ],
-    test_suite='nose.collector',
     keywords=['elections', 'Clarity', 'results', 'parser', 'scraper'],
     classifiers=[
         'Development Status :: 3 - Alpha',
