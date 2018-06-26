@@ -1,10 +1,12 @@
 language: "python"
+
 python:
   - "3.4"
   - "3.5"
   - "3.6"
 
 install:
+  - pip install codecov
   - pip install -r requirements.txt
   - pip install .
   # command to run tests
@@ -12,4 +14,4 @@ script:
   - pytest # or py.test for Python versions 3.5 and below
 
 after_success:
-  - bash < (curl -s https://codecov.io/bash)
+  - codecov
