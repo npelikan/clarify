@@ -21,7 +21,15 @@ class Parser(object):
     http://results.enr.clarityelections.com/KY/Adair/15263/27401/reports/detailxml.zip
 
     """
-    def __init__(self):
+    def __init__(self, f):
+        """
+                Parse the report XML file, populating attributes
+
+                Args:
+                    f: String containing filename or file-like object for the XML
+                       report file to be parsed.
+
+        """
         self.timestamp = None
         self.election_name = None
         self.election_date = None
@@ -33,15 +41,6 @@ class Parser(object):
         self._contests = []
         self._contest_lookup = {}
 
-    def parse(self, f):
-        """
-        Parse the report XML file, populating attributes
-
-        Args:
-            f: String containing filename or file-like object for the XML
-               report file to be parsed.
-
-        """
         tree = etree.parse(f)
         election_voter_turnout = self._parse_election_voter_turnout(tree)
         self.timestamp = self._parse_timestamp(tree)
@@ -79,7 +78,7 @@ class Parser(object):
         else:
             raise Exception("too many files in zip. New format?")
 
-        return cls.parse(extracted_file)
+        return cls(extracted_file)
 
     def _parse_timestamp(self, tree):
         """

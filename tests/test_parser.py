@@ -1,3 +1,17 @@
+from clarify import *
+
+v1_url = "http://results.enr.clarityelections.com/NJ/Cape_May/71890/190686/Web01/en/summary.html"
+
+v2_url = "http://results.enr.clarityelections.com/NJ/Mercer/71882/Web02/#/"
+
+
+# test if jurisdiction auto_downloads
+def test_jurisdiction_parse():
+    j = Jurisdiction(v1_url, 'county')
+    p = Parser.from_jurisdiction(j)
+    assert isinstance(p, Parser)
+
+
 # import datetime
 # import unittest
 #
