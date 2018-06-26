@@ -21,7 +21,7 @@ class Parser(object):
     http://results.enr.clarityelections.com/KY/Adair/15263/27401/reports/detailxml.zip
 
     """
-    def __init__(self, f):
+    def __init__(self):
         """
                 Parse the report XML file, populating attributes
 
@@ -41,23 +41,10 @@ class Parser(object):
         self._contests = []
         self._contest_lookup = {}
 
-        tree = etree.parse(f)
-        election_voter_turnout = self._parse_election_voter_turnout(tree)
-        self.timestamp = self._parse_timestamp(tree)
-        self.election_name = self._parse_election_name(tree)
-        self.election_date = self._parse_election_date(tree)
-        self.region = self._parse_region(tree)
-        self.total_voters = int(election_voter_turnout[0])
-        self.ballots_cast = int(election_voter_turnout[1])
-        self.voter_turnout = float(election_voter_turnout[2])
+    def parse(self, f):
+        self._parse_file(f)
 
-        self._result_jurisdictions = self._parse_result_jurisdictions(tree)
-        self._result_jurisdiction_lookup = {j.name: j for j in self._result_jurisdictions}
-        self._contests = self._parse_contests(tree, self._result_jurisdiction_lookup)
-        self._contest_lookup = {c.text: c for c in self._contests}
-
-    @classmethod
-    def from_jurisdiction(cls, jurisdiction):
+    def from_jurisdiction(self, jurisdiction):
         """
         Downloads from Jurisdiction object and parses.
         :param jurisdiction: an instantiated object of class Jurisdiction
@@ -78,7 +65,23 @@ class Parser(object):
         else:
             raise Exception("too many files in zip. New format?")
 
-        return cls(extracted_file)
+        self._parse_file(extracted_file)
+
+    def _parse_file(self, f):
+        tree = etree.parse(f)
+        election_voter_turnout = self._parse_election_voter_turnout(tree)
+        self.timestamp = self._parse_timestamp(tree)
+        self.election_name = self._parse_election_name(tree)
+        self.election_date = self._parse_election_date(tree)
+        self.region = self._parse_region(tree)
+        self.total_voters = int(election_voter_turnout[0])
+        self.ballots_cast = int(election_voter_turnout[1])
+        self.voter_turnout = float(election_voter_turnout[2])
+
+        self._result_jurisdictions = self._parse_result_jurisdictions(tree)
+        self._result_jurisdiction_lookup = {j.name: j for j in self._result_jurisdictions}
+        self._contests = self._parse_contests(tree, self._result_jurisdiction_lookup)
+        self._contest_lookup = {c.text: c for c in self._contests}
 
     def _parse_timestamp(self, tree):
         """
