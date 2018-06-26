@@ -1,8 +1,17 @@
 import datetime
 from collections import namedtuple
+from . import Jurisdiction
 
 import dateutil.parser
 from lxml import etree
+
+import requests
+from io import BytesIO
+from zipfile import ZipFile
+import tempfile
+
+
+
 
 class Parser(object):
     """
@@ -47,6 +56,30 @@ class Parser(object):
         self._result_jurisdiction_lookup = {j.name: j for j in self._result_jurisdictions}
         self._contests = self._parse_contests(tree, self._result_jurisdiction_lookup)
         self._contest_lookup = {c.text: c for c in self._contests}
+
+    @classmethod
+    def from_jurisdiction(cls, jurisdiction):
+        """
+        Downloads from Jurisdiction object and parses.
+        :param jurisdiction: an instantiated object of class Jurisdiction
+        :return: a fully instantiated clarifyr parser
+        """
+        if not isinstance(jurisdiction, Jurisdiction):
+            raise Exception('object `jurisdiction` must be of class Jurisdiction. Please construct using Jurisdiction class')
+
+        file_url = jurisdiction.report_url('xml')
+
+        tfl = tempfile.mkdtemp()
+        url = requests.get(file_url)
+        zipfile = ZipFile(BytesIO(url.content))
+        zip_names = zipfile.namelist()
+        if len(zip_names) == 1:
+            file_name = zip_names.pop()
+            extracted_file = zipfile.extract(file_name, path=tfl)
+        else:
+            raise Exception("too many files in zip. New format?")
+
+        return cls.parse(extracted_file)
 
     def _parse_timestamp(self, tree):
         """

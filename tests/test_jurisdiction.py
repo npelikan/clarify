@@ -8,6 +8,7 @@ v2_url = "http://results.enr.clarityelections.com/NJ/Mercer/71882/Web02/#/"
 def test_gets_v1_url_correctly():
     j = Jurisdiction(v1_url, 'county')
     assert j.summary_url == 'http://results.enr.clarityelections.com/NJ/Cape_May/71890/191220/reports/summary.zip'
+    assert j.report_url('xml') == 'http://results.enr.clarityelections.com/NJ/Cape_May/71890/191220/reports/detailxml.zip'
 
 
 def test_gets_v1_subjurisdictions():
@@ -19,6 +20,8 @@ def test_gets_v1_subjurisdictions():
 def test_gets_v2_url_correctly():
     j = Jurisdiction(v2_url, 'county')
     assert j.summary_url == 'http://results.enr.clarityelections.com/NJ/Mercer/71882/191470/reports/summary.zip'
+    assert j.report_url('xml') == 'http://results.enr.clarityelections.com/NJ/Mercer/71882/191470/reports/detailxml.zip'
+
 
 
 # import os
