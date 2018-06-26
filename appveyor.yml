@@ -8,46 +8,6 @@ environment:
 
 install:
 
-#  - echo set _PWD=%%%%~dp0>tmp_prereq_dir.bat
-#  - call tmp_prereq_dir.bat
-#  - rm tmp_prereq_dir.bat
-#
-#  - set _PREREQ_DIR=prereqs
-#  - set _PREREQ_ABSDIR=%_PWD%%_PREREQ_DIR%
-#  - echo Installing lxml prereqs into %_PREREQ_ABSDIR%
-#  - mkdir %_PREREQ_DIR%
-#
-#  - set _PKGFILE=libxml2-2.7.8.win32.zip
-#  - set _PKGDIR=libxml2-2.7.8.win32
-#  - wget -q -P %_PREREQ_DIR% ftp://ftp.zlatkovic.com/libxml/%_PKGFILE%
-#  - unzip -q -d %_PREREQ_DIR% %_PREREQ_DIR%/%_PKGFILE%
-#  - set INCLUDE=%_PREREQ_ABSDIR%\%_PKGDIR%\include;%INCLUDE%
-#  - set LIB=%_PREREQ_ABSDIR%\%_PKGDIR%\lib;%LIB%
-#  - set PATH=%_PREREQ_ABSDIR%\%_PKGDIR%\bin;%PATH%
-#
-#  - set _PKGFILE=libxslt-1.1.26.win32.zip
-#  - set _PKGDIR=libxslt-1.1.26.win32
-#  - wget -q -P %_PREREQ_DIR% ftp://ftp.zlatkovic.com/libxml/%_PKGFILE%
-#  - unzip -q -d %_PREREQ_DIR% %_PREREQ_DIR%/%_PKGFILE%
-#  - set INCLUDE=%_PREREQ_ABSDIR%\%_PKGDIR%\include;%INCLUDE%
-#  - set LIB=%_PREREQ_ABSDIR%\%_PKGDIR%\lib;%LIB%
-#  - set PATH=%_PREREQ_ABSDIR%\%_PKGDIR%\bin;%PATH%
-#
-#  - set _PKGFILE=zlib-1.2.5.win32.zip
-#  - set _PKGDIR=zlib-1.2.5
-#  - wget -q -P %_PREREQ_DIR% ftp://ftp.zlatkovic.com/libxml/%_PKGFILE%
-#  - unzip -q -d %_PREREQ_DIR% %_PREREQ_DIR%/%_PKGFILE%
-#  - set INCLUDE=%_PREREQ_ABSDIR%\%_PKGDIR%\include;%INCLUDE%
-#  - set LIB=%_PREREQ_ABSDIR%\%_PKGDIR%\lib;%LIB%
-#  - set PATH=%_PREREQ_ABSDIR%\%_PKGDIR%\bin;%PATH%
-#
-#  - set _PKGFILE=iconv-1.9.2.win32.zip
-#  - set _PKGDIR=iconv-1.9.2.win32
-#  - wget -q -P %_PREREQ_DIR% ftp://ftp.zlatkovic.com/libxml/%_PKGFILE%
-#  - unzip -q -d %_PREREQ_DIR% %_PREREQ_DIR%/%_PKGFILE%
-#  - set INCLUDE=%_PREREQ_ABSDIR%\%_PKGDIR%\include;%INCLUDE%
-#  - set LIB=%_PREREQ_ABSDIR%\%_PKGDIR%\lib;%LIB%
-#  - set PATH=%_PREREQ_ABSDIR%\%_PKGDIR%\bin;%PATH%
   # We need wheel installed to build wheels
   - "%PYTHON%\\python.exe -m pip install wheel"
   - "%PYTHON%\\python.exe -m pip install requests"
