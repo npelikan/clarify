@@ -36,6 +36,8 @@ setup(
         'requests-futures',
     ],
     keywords=['elections', 'Clarity', 'results', 'parser', 'scraper'],
+    test_suite='tests',
+    tests_require=['pytest'],
     classifiers=[
         'Development Status :: 3 - Alpha',
         'License :: OSI Approved :: MIT License',
