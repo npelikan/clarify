@@ -37,7 +37,7 @@ setup(
     ],
     keywords=['elections', 'Clarity', 'results', 'parser', 'scraper'],
     test_suite='tests',
-    tests_require=['pytest'],
+    tests_require=['pytest', 'datetime'],
     classifiers=[
         'Development Status :: 3 - Alpha',
         'License :: OSI Approved :: MIT License',
